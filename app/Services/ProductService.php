@@ -6,8 +6,6 @@ namespace App\Services;
 
 use App\Events\NewProductEvent;
 use App\Models\Product;
-use App\Models\ProductDetail;
-use App\Models\ProductReview;
 use Illuminate\Support\Facades\Event;
 
 class ProductService
@@ -25,7 +23,7 @@ class ProductService
 
     public function createProduct(array $data): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
     {
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = $data['user_id'] ?? auth()->id();
         $product         = Product::query()->create($data);
         $product->details()->create($data);
         Event::dispatch(new NewProductEvent($product));

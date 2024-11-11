@@ -28,6 +28,6 @@ class SendProductMail
      */
     public function handle(NewProductEvent $event)
     {
-        Mail::to(auth()->user()->email)->send(new EmailMailer(true, $event->product));
+        Mail::to(auth()->user()->email ?? 'test@gmail.com')->send(new EmailMailer(true, $event->product));
     }
 }
