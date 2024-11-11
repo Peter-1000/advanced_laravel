@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -15,15 +16,20 @@ class EmailMailer extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public bool $isProductEmail;
+    public $product;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param bool $isProductEmail
+     * @param $product
      */
-    public function __construct()
+    public function __construct(bool $isProductEmail = false, $product = null)
     {
-        $this->user = auth()->user();
+        $this->user           = auth()->user();
+        $this->isProductEmail = $isProductEmail;
+        $this->product        = $product;
     }
 
     /**
@@ -34,7 +40,7 @@ class EmailMailer extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Testing emails',
+            subject: $this->isProductEmail ? 'New Product' : 'Testing emails',
         );
     }
 

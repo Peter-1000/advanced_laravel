@@ -402,5 +402,8 @@
 <body class="antialiased">
 <h1>Welcome {{$user->name}}</h1>
 <p>This email is a test</p>
+@if($isProductEmail)
+    <h4>New product added @isset($product) ( {{$product->title . ' at ' . $product->created_at}} ) @endisset</h4>
+@endif
 </body>
 </html>

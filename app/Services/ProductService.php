@@ -4,9 +4,11 @@
 namespace App\Services;
 
 
+use App\Events\NewProductEvent;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\ProductReview;
+use Illuminate\Support\Facades\Event;
 
 class ProductService
 {
@@ -26,6 +28,7 @@ class ProductService
         $data['user_id'] = auth()->id();
         $product         = Product::query()->create($data);
         $product->details()->create($data);
+        Event::dispatch(new NewProductEvent($product));
         return $product;
     }
 

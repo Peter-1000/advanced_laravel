@@ -25,5 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('products', ProductController::class)->middleware(['auth:sanctum', 'checkAdmin:Admin']);
+Route::resource('products', ProductController::class)->middleware(['auth:sanctum', 'checkAdmin:Peter']);
 Route::post('send-email', [EmailController::class, 'sendEmail'])->middleware(['auth:sanctum']);
