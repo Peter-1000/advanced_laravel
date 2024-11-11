@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\EmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('products', ProductController::class)->middleware(['auth:sanctum', 'checkAdmin:Peter']);
+Route::resource('products', ProductController::class)->middleware(['auth:sanctum', 'checkAdmin:Admin']);
+Route::post('send-email', [EmailController::class, 'sendEmail'])->middleware(['auth:sanctum']);
