@@ -4,8 +4,12 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Exports\ProductsExport;
+use App\Imports\ProductImport;
+use App\Request\Products\ImportProductsExcelRequest;
 use App\Request\User\CreateProductRequest;
 use App\Services\ProductService;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends BaseController
@@ -49,6 +53,21 @@ class ProductController extends BaseController
     {
         $this->productService->deleteProduct($id);
         return $this->sendResponse('Deleted successfully');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new ProductsExport(), 'products.xlsx');
+    }
+
+    public function importExcel(ImportProductsExcelRequest $request)
+    {
+        if (!empty($request->getErrors())) {
+            return response()->json($request->getErrors(), Response::HTTP_FORBIDDEN);
+        }
+        Excel::import(new ProductImport(), $request->request()->file('file')->store('files'));
+
+        return  $this->sendResponse('Saved Successfully');
     }
 
 }

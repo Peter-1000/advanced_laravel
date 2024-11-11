@@ -21,6 +21,9 @@ use App\Http\Controllers\Api\EmailController;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
+Route::get('products/export-excel', [ProductController::class, 'exportExcel']);
+Route::post('products/import-excel', [ProductController::class, 'importExcel']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
