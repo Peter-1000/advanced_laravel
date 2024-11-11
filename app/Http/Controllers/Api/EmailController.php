@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Mail\EmailMailer;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class EmailController extends BaseController
