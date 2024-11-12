@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Events\NewProductEvent;
 use App\Models\Product;
 use Illuminate\Support\Facades\Event;
+use wwd\slug\functions\SlugGen;
 
 class ProductService
 {
@@ -23,6 +24,7 @@ class ProductService
 
     public function createProduct(array $data): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
     {
+        SlugGen::generate($data['title'], Product::class);
         $data['user_id'] = $data['user_id'] ?? auth()->id();
         $product         = Product::query()->create($data);
         $product->details()->create($data);
