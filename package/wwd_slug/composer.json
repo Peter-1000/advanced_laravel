@@ -11,5 +11,10 @@
         "psr-4": {
             "wdd\\slug\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": "wdd\\slug\\SlugServiceProvider"
+        }
     }
 }
